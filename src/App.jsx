@@ -1,6 +1,6 @@
 import { useState } from "react";
-import lovesvg from "./assets/All You Need Is Love SVG Cut File.svg";
-import lovesvg2 from "./assets/Love In The Air SVG Cut File.svg";
+import lovesvg from "./assets/All You Need Is One Friend SVG Cut File.svg";
+import lovesvg2 from "./assets/Agar wo meri sabse acchi dost nhi bn skti to..... Cut File.svg";
 
 export default function Page() {
   const [noCount, setNoCount] = useState(0);
@@ -41,8 +41,8 @@ export default function Page() {
     <div className="overflow-hidden flex flex-col items-center justify-center pt-4 h-screen -mt-16 selection:bg-rose-600 selection:text-white text-zinc-900">
       {yesPressed ? (
         <>
-          <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" />
-          <div className="text-4xl md:text-6xl font-bold my-4">
+          <img src="https://tenor.com/view/best-friends---sharukh-khan---kajol-happy-friendship-day-friends-friendship-day-best-friends-gif-8853383277231104118" />
+          <div class="tenor-gif-embed" data-postid="8853383277231104118" data-share-method="host" data-aspect-ratio="1.76471" data-width="100%">
             Ok Yayyyyy!!!
           </div>
         </>
