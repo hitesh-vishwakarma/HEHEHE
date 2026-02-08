@@ -2,6 +2,19 @@ import { useState } from "react";
 import lovesvg from "./assets/All You Need Is Love SVG Cut File.svg";
 import lovesvg2 from "./assets/Love In The Air SVG Cut File.svg";
 
+// --- TUS FOTOS ---
+
+// 1. Foto final (SÍ)
+import fotoFinal from "./assets/foto_final.jpg"; 
+
+// 2. Foto de PORTADA (fija al inicio)
+import fotoPortada from "./assets/foto_portada.jpg";
+
+// 3. Las 3 fotos que se repiten CUANDO DA CLICK EN NO
+import fotoReaccion1 from "./assets/foto1.jpg";
+import fotoReaccion2 from "./assets/foto2.jpg";
+import fotoReaccion3 from "./assets/foto3.jpg";
+
 export default function Page() {
   const [noCount, setNoCount] = useState(0);
   const [yesPressed, setYesPressed] = useState(false);
@@ -13,37 +26,45 @@ export default function Page() {
 
   const getNoButtonText = () => {
     const phrases = [
-      "No",
-      "Are you sure?",
-      "Really sure?",
-      "Think again!",
-      "Last chance!",
-      "Surely not?",
-      "You might regret this!",
-      "Give it another thought!",
-      "Are you absolutely certain?",
-      "This could be a mistake!",
-      "Have a heart!",
-      "Don't be so cold!",
-      "Change of heart?",
-      "Wouldn't you reconsider?",
-      "Is that your final answer?",
-      "You're breaking my heart ;(",
-      "Is that your final answer?",
-      "You're breaking my heart ;(",
-      "Plsss? :( You're breaking my heart",
+      "No, me das asko",
+      "No, te odio",
+      "Ya dale q si",
+      "Porfis di q si",
+      "Amor q te pasa",
+      "Dale a siii",
+      "Le das a si o me mato",
+      "Ok ya t estas pasando",
+      "Amor...",
+      "Ya presiona q si",
+      ":(",
+      "Te acuerdas la vez q me cai",
     ];
 
     return phrases[Math.min(noCount, phrases.length - 1)];
   };
 
+  // --- LÓGICA DE FOTOS ---
+  const fotosBucle = [fotoReaccion1, fotoReaccion2, fotoReaccion3];
+  
+  // Si no ha dado click (0), muestra portada. 
+  // Si ya dio click, cicla entre las 3 fotos de reacción.
+  // (noCount - 1) sirve para que el primer click (1) muestre la foto del indice [0]
+  const imagenAmostrar = noCount === 0 
+    ? fotoPortada 
+    : fotosBucle[(noCount - 1) % fotosBucle.length];
+
   return (
     <div className="overflow-hidden flex flex-col items-center justify-center pt-4 h-screen -mt-16 selection:bg-rose-600 selection:text-white text-zinc-900">
       {yesPressed ? (
         <>
-          <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" />
-          <div className="text-4xl md:text-6xl font-bold my-4">
-            Ok Yayyyyy!!!
+          {/* FOTO CUANDO DICE QUE SÍ */}
+          <img 
+            src={fotoFinal} 
+            className="h-[300px] rounded-lg shadow-lg object-cover" 
+            alt="Nosotros felices"
+          />
+          <div className="text-4xl md:text-6xl font-bold my-4 text-center">
+            Okk, te invito a un picnic bonito cuando volvamos a la playa T amo ❤️
           </div>
         </>
       ) : (
@@ -56,20 +77,25 @@ export default function Page() {
             src={lovesvg2}
             className="fixed bottom-16 -z-10 animate-pulse md:right-24 right-10 md:w-40 w-32"
           />
+          
+          {/* FOTO DINÁMICA (Portada o Bucle) */}
           <img
-            className="h-[230px] rounded-lg shadow-lg"
-            src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.webp"
+            className="h-[230px] rounded-lg shadow-lg object-cover transition-all duration-300"
+            src={imagenAmostrar}
+            alt="Nosotros"
           />
-          <h1 className="text-4xl md:text-6xl my-4 text-center">
-            Will you be my Valentine?
+          
+          <h1 className="text-4xl md:text-6xl my-4 text-center px-4">
+            Kieres ser mi Valentine?
           </h1>
+          
           <div className="flex flex-wrap justify-center gap-2 items-center">
             <button
               className={`bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg mr-4`}
               style={{ fontSize: yesButtonSize }}
               onClick={() => setYesPressed(true)}
             >
-              Yes
+              Síi obvi
             </button>
             <button
               onClick={handleNoClick}
@@ -87,15 +113,8 @@ export default function Page() {
 
 const Footer = () => {
   return (
-    <a
-      className="fixed bottom-2 right-2 backdrop-blur-md opacity-80 hover:opacity-95 border p-1 rounded border-rose-300"
-      href="https://github.com/Xeven777/valentine"
-      target="__blank"
-    >
-      Made with{" "}
-      <span role="img" aria-label="heart">
-        ❤️
-      </span>
-    </a>
+    <div className="fixed bottom-2 right-2 backdrop-blur-md opacity-80 text-sm">
+      Hecho por Alejandro Moreno<span role="img" aria-label="heart">❤️</span> para ti
+    </div>
   );
 };
