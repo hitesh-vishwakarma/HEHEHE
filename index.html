@@ -9,50 +9,69 @@
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
-    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff6f91, #ff9671);
     height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 400px;
 }
 
 h1 {
-    margin-top: 120px;
-    font-size: 42px;
     color: white;
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.gif {
+    width: 180px;
+    border-radius: 20px;
+    margin-bottom: 20px;
 }
 
 .buttons {
-    margin-top: 40px;
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 button {
-    padding: 15px 35px;
-    font-size: 20px;
+    padding: 16px;
+    font-size: 18px;
     border: none;
     border-radius: 40px;
     cursor: pointer;
-    transition: 0.3s ease;
-    margin: 10px;
+    transition: all 0.3s ease;
 }
 
 #yesBtn {
-    background: #ff1744;
+    background-color: #ff1744;
     color: white;
 }
 
 #noBtn {
-    background: white;
+    background-color: white;
     color: #ff1744;
 }
 
 .message {
-    font-size: 28px;
-    color: white;
-    margin-top: 40px;
     display: none;
+    font-size: 20px;
+    color: white;
     animation: fadeIn 1s ease-in-out forwards;
+}
+
+.success-gif {
+    width: 220px;
+    border-radius: 20px;
+    margin-bottom: 20px;
 }
 
 @keyframes fadeIn {
@@ -63,100 +82,116 @@ button {
 /* Floating hearts */
 .heart {
     position: absolute;
-    color: red;
-    font-size: 25px;
-    animation: float 6s linear infinite;
+    color: white;
+    font-size: 20px;
+    animation: float 5s linear infinite;
 }
 
 @keyframes float {
-    0% {
-        transform: translateY(100vh);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-10vh);
-        opacity: 0;
-    }
+    0% { transform: translateY(100vh); opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<h1>Will You Be My Valentine? ❤️</h1>
+<div class="container">
 
-<div class="buttons">
-    <button id="yesBtn">Yes 💖</button>
-    <button id="noBtn">No 😜</button>
-</div>
+    <h1 id="question">Will You Be My Valentine? ❤️</h1>
 
-<div class="message" id="message">
-    I knew you would say YES! ❤️  
-    <br><br>
-    Let's meet today at <b>Grand Palace Hotel</b> at <b>7:00 PM</b> 💕  
-    Can't wait to see you! 💘
+    <!-- Cute pleading GIF -->
+    <img id="mainGif" class="gif"
+        src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
+        alt="Cute please gif">
+
+    <div class="buttons" id="buttons">
+        <button id="yesBtn">Yes 💖</button>
+        <button id="noBtn">No 🥺</button>
+    </div>
+
+    <div class="message" id="message">
+        <img class="success-gif"
+        src="https://media.giphy.com/media/l4FGuhL4U2WyjdkaY/giphy.gif"
+        alt="Happy love gif">
+
+        <br>
+        I knew you would say YES! ❤️<br><br>
+        Let's meet today at <b>Grand Palace Hotel</b><br>
+        at <b>7:00 PM</b> 💕<br><br>
+        Can't wait to see you! 💘
+    </div>
+
 </div>
 
 <script>
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const message = document.getElementById("message");
+const buttons = document.getElementById("buttons");
+const question = document.getElementById("question");
+const mainGif = document.getElementById("mainGif");
 
 let noClickCount = 0;
 let yesScale = 1;
 
-const noTexts = [
-    "Are you sure? 😢",
-    "Really sure? 🥺",
-    "Think again! 💔",
-    "Last chance! 😭",
-    "Keep asking... 😏"
+const sweetTexts = [
+    "Please? 🥺",
+    "I'll bring chocolates 🍫",
+    "You’ll make me happiest ❤️",
+    "Pretty please? 🌹",
+    "You are too cute to say no 😍"
 ];
 
 noBtn.addEventListener("click", function() {
+
+    if (noClickCount < sweetTexts.length) {
+        noBtn.innerText = sweetTexts[noClickCount];
+    }
+
     noClickCount++;
 
-    // Change text
-    if (noClickCount <= noTexts.length) {
-        noBtn.innerText = noTexts[noClickCount - 1];
+    // Change GIF to more dramatic pleading one
+    if (noClickCount >= 2) {
+        mainGif.src = "https://media.giphy.com/media/OPU6wzx8JrHna/giphy.gif";
     }
 
     // Increase Yes button size
     yesScale += 0.3;
     yesBtn.style.transform = `scale(${yesScale})`;
 
-    // Shrink No button
-    noBtn.style.transform = `scale(${1 - noClickCount * 0.1})`;
-
-    // After 5 clicks, remove No button completely
-    if (noClickCount >= 5) {
-        noBtn.style.position = "absolute";
-        noBtn.style.left = "-9999px"; // move out of screen
+    // Shrink No button gradually
+    let noScale = 1 - (noClickCount * 0.15);
+    if (noScale > 0) {
+        noBtn.style.transform = `scale(${noScale})`;
+    } else {
+        noBtn.style.display = "none";
     }
 });
 
 yesBtn.addEventListener("click", function() {
-    document.querySelector("h1").style.display = "none";
-    document.querySelector(".buttons").style.display = "none";
+    question.style.display = "none";
+    buttons.style.display = "none";
+    mainGif.style.display = "none";
     message.style.display = "block";
 });
 
-// Floating hearts
+// Floating hearts animation
 function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
     heart.innerHTML = "❤️";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (20 + Math.random() * 30) + "px";
-    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+    heart.style.fontSize = (15 + Math.random() * 20) + "px";
+    heart.style.animationDuration = (4 + Math.random() * 3) + "s";
     document.body.appendChild(heart);
 
     setTimeout(() => {
         heart.remove();
-    }, 6000);
+    }, 5000);
 }
 
-setInterval(createHeart, 300);
+setInterval(createHeart, 400);
 </script>
 
 </body>
