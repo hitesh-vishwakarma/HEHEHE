@@ -1,8 +1,8 @@
-# 🥰 Be My Valentine? 🥰
+# 🥰 Be My Valentine khepy? 🥰
 
 ![Project Image](https://i.imgur.com/8q884zI.png)
 
-Welcome to the most adorable project you've ever seen! This is a special React application designed to ask that special someone: "Will you be my Valentine?".
+Welcome to the most adorable project you've ever seen! This is a special React application designed to ask that special someone: "Will you be my Valentine khepy ?".
 
 ## 💖 What's Inside? 💖
 [Link to site](https://formyvalentine.netlify.app)
@@ -33,6 +33,6 @@ This project was made with love by [Anish](https://github.com/xeven777). Feel fr
 
 Feedback and contributions are always welcome! Feel free to open an issue or submit a pull request.
 
-Happy Valentine's Day! 💘
+Happy Valentine's Day khepy! 💘
 ---
-
+next page open and two cute Teddy bears kissing and write down Happy Valentine's Day sweetheart 💕 I love you sooooooo much Amar khepy 💞 
