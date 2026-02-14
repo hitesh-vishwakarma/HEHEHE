@@ -6,85 +6,78 @@
 <title>Be My Valentine ❤️</title>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        font-family: 'Poppins', sans-serif;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        text-align: center;
-        height: 100vh;
-    }
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    text-align: center;
+    height: 100vh;
+}
 
-    h1 {
-        margin-top: 100px;
-        font-size: 40px;
-        color: white;
-        text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-    }
+h1 {
+    margin-top: 120px;
+    font-size: 42px;
+    color: white;
+}
 
-    .buttons {
-        margin-top: 40px;
-        position: relative;
-    }
+.buttons {
+    margin-top: 40px;
+    position: relative;
+}
 
-    button {
-        padding: 15px 35px;
-        font-size: 20px;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: 0.3s;
-        margin: 10px;
-    }
+button {
+    padding: 15px 35px;
+    font-size: 20px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin: 10px;
+}
 
-    #yesBtn {
-        background-color: #ff4b5c;
-        color: white;
-    }
+#yesBtn {
+    background: #ff1744;
+    color: white;
+}
 
-    #yesBtn:hover {
-        background-color: #ff1e3c;
-        transform: scale(1.1);
-    }
+#noBtn {
+    background: white;
+    color: #ff1744;
+}
 
-    #noBtn {
-        background-color: white;
-        color: #ff4b5c;
-        position: absolute;
-    }
+.message {
+    font-size: 28px;
+    color: white;
+    margin-top: 40px;
+    display: none;
+    animation: fadeIn 1s ease-in-out forwards;
+}
 
-    .message {
-        font-size: 28px;
-        color: white;
-        margin-top: 40px;
-        display: none;
-        animation: fadeIn 1s ease-in-out forwards;
-    }
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
 
-    @keyframes fadeIn {
-        from {opacity: 0;}
-        to {opacity: 1;}
-    }
+/* Floating hearts */
+.heart {
+    position: absolute;
+    color: red;
+    font-size: 25px;
+    animation: float 6s linear infinite;
+}
 
-    /* Heart balloons */
-    .heart {
-        position: absolute;
-        color: red;
-        font-size: 30px;
-        animation: float 6s linear infinite;
+@keyframes float {
+    0% {
+        transform: translateY(100vh);
+        opacity: 1;
     }
-
-    @keyframes float {
-        0% {
-            transform: translateY(100vh);
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(-10vh);
-            opacity: 0;
-        }
+    100% {
+        transform: translateY(-10vh);
+        opacity: 0;
     }
+}
 </style>
 </head>
 
@@ -105,39 +98,65 @@
 </div>
 
 <script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const message = document.getElementById("message");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const message = document.getElementById("message");
 
-    // Make NO button run away
-    noBtn.addEventListener("mouseover", function() {
-        const x = Math.random() * (window.innerWidth - 100);
-        const y = Math.random() * (window.innerHeight - 50);
-        noBtn.style.left = x + "px";
-        noBtn.style.top = y + "px";
-    });
+let noClickCount = 0;
+let yesScale = 1;
 
-    // YES button click
-    yesBtn.addEventListener("click", function() {
-        message.style.display = "block";
-    });
+const noTexts = [
+    "Are you sure? 😢",
+    "Really sure? 🥺",
+    "Think again! 💔",
+    "Last chance! 😭",
+    "Keep asking... 😏"
+];
 
-    // Create floating hearts
-    function createHeart() {
-        const heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "❤️";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = (20 + Math.random() * 30) + "px";
-        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
-        document.body.appendChild(heart);
+noBtn.addEventListener("click", function() {
+    noClickCount++;
 
-        setTimeout(() => {
-            heart.remove();
-        }, 6000);
+    // Change text
+    if (noClickCount <= noTexts.length) {
+        noBtn.innerText = noTexts[noClickCount - 1];
     }
 
-    setInterval(createHeart, 300);
+    // Increase Yes button size
+    yesScale += 0.3;
+    yesBtn.style.transform = `scale(${yesScale})`;
+
+    // Shrink No button
+    noBtn.style.transform = `scale(${1 - noClickCount * 0.1})`;
+
+    // After 5 clicks, remove No button completely
+    if (noClickCount >= 5) {
+        noBtn.style.position = "absolute";
+        noBtn.style.left = "-9999px"; // move out of screen
+    }
+});
+
+yesBtn.addEventListener("click", function() {
+    document.querySelector("h1").style.display = "none";
+    document.querySelector(".buttons").style.display = "none";
+    message.style.display = "block";
+});
+
+// Floating hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (20 + Math.random() * 30) + "px";
+    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 6000);
+}
+
+setInterval(createHeart, 300);
 </script>
 
 </body>
